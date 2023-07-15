@@ -1,0 +1,36 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="app">
+    <h1>Welcome to the Book App</h1>
+    <div v-if="loggedIn" class="user-section">
+      <h2>Hello, {{ username }}</h2>
+      <button @click="logout">Logout</button>
+    </div>
+    <div v-else class="login-section">
+      <h2>Login</h2>
+      <input type="text" v-model="loginForm.username" placeholder="Username">
+      <input type="password" v-model="loginForm.password" placeholder="Password">
+      <button @click="login">Login</button>
+    </div>
+    <h2>Books</h2>
+    <ul>
+      <li v-for="book in books" :key="book.id">{{ book.title }} by {{ book.author }}</li>
+    </ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
+

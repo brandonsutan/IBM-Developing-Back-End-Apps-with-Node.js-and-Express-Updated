@@ -1,43 +1,44 @@
 // app.js
 new Vue({
-    el: '#app',
-    data() {
-      return {
-        loggedIn: false,
+  el: '#app',
+  data() {
+    return {
+      loggedIn: false,
+      username: '',
+      loginForm: {
         username: '',
-        loginForm: {
-          username: '',
-          password: ''
-        },
-        books: []
-      };
-    },
-    methods: {
-      login() {
-        // Implement the login logic here using API requests or mock data
-        // Set the loggedIn state and username
-        this.loggedIn = true;
-        this.username = this.loginForm.username;
+        password: ''
       },
-      logout() {
-        // Implement the logout logic here
-        // Reset the loggedIn state and username
-        this.loggedIn = false;
-        this.username = '';
-      },
-      fetchBooks() {
-        // Implement fetching books from the backend here using API requests or mock data
-        // Update the books array with the retrieved data
-        this.books = [
-          { id: 1, title: 'Book 1', author: 'Author 1' },
-          { id: 2, title: 'Book 2', author: 'Author 2' },
-          { id: 3, title: 'Book 3', author: 'Author 3' }
-        ];
-      }
+      books: []
+    };
+  },
+  methods: {
+    login() {
+      // Implement the login logic here using API requests or mock data
+      // Set the loggedIn state and username
+      this.loggedIn = true;
+      this.username = this.loginForm.username;
     },
-    mounted() {
-      // Fetch books when the component is mounted
-      this.fetchBooks();
-    }
-  });
-  
+    logout() {
+      // Implement the logout logic here
+      // Reset the loggedIn state and username
+      this.loggedIn = false;
+      this.username = '';
+    },
+    fetchBooks() {
+      // Import the books object from booksdb.js using dynamic import
+      import('./router/booksdb.js').then(module => {
+        // Extract the books object from the imported module
+        const books = module.default;
+        // Convert the books object to an array
+        this.books = Object.values(books);
+      }).catch(error => {
+        console.error('Failed to fetch books:', error);
+      });
+    }    
+  },
+  mounted() {
+    // Fetch books when the component is mounted
+    this.fetchBooks();
+  }
+});
